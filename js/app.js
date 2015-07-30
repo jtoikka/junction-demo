@@ -40,16 +40,16 @@ function initialize() {
 	$(window).on('resize', onWindowResize);
 	el.append(renderer.view);
 
-	pulses.push(new Pulse());
+	// pulses.push(new Pulse());
 }
 
 function animate() {
 	var now = Date.now();
 	var delta = now - lastFrame;
 	lastFrame = now;
-	pulses.forEach(function(pulse) {
-		pulse.time += delta;
-	});
+	// pulses.forEach(function(pulse) {
+	// 	pulse.time += delta;
+	// });
 	renderer.render(stage);
 	requestAnimationFrame(animate);
 }
@@ -61,6 +61,6 @@ function onWindowResize() {
 	renderer.render(stage);
 }
 
-function Pulse() {
-	this.time = 0.0;
-}
+// function Pulse() {
+// 	this.time = 0.0;
+// }
