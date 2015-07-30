@@ -1,6 +1,9 @@
 var el = $('#webgl-view');
 
+
+
 var pixelRatio = window.devicePixelRatio || 1;
+
 var rendererOptions = {
     antialias:true,
     transparent:false,
@@ -38,7 +41,8 @@ stage.addChild(graphics);
 
 var pulses = new Array();
 
-var lastFrame = Date.now();
+var fps = 8;
+var lastFrame = 0;
 
 initialize();
 onWindowResize();
@@ -52,14 +56,20 @@ function initialize() {
 }
 
 function animate() {
-	var now = Date.now();
+	var now = new Date().getTime();
 	var delta = now - lastFrame;
-	lastFrame = now;
+	if(delta >= (1000 / fps)){
+		console.log("Draw");
+		lastFrame = now;
+		renderer.render(stage);
+	}
+	requestAnimationFrame(animate);
+
 	// pulses.forEach(function(pulse) {
 	// 	pulse.time += delta;
 	// });
-	renderer.render(stage);
-	//requestAnimationFrame(animate);
+	
+
 }
 
 function onWindowResize() {
