@@ -1,17 +1,36 @@
 var el = $('#webgl-view');
 
-var renderer = new PIXI.WebGLRenderer(el.width(), el.height());
+var renderer = new PIXI.autoDetectRenderer(el.width(), el.height(), {antialias: true});
+
+var graphics = new PIXI.Graphics();
+
+graphics.lineStyle(0);
+graphics.beginFill(0xffffff, 0.7);
+
+var worldWidth = 128;
+var worldHeight = 64;
+
+var cellWidth = 32;
+var halfWidth = cellWidth / 2;
+var margin = 2;
+
+for (var x = 0; x < worldWidth; x++) {
+	for (var y = 0; y < worldHeight; y++) {
+		if (world[x + y * worldWidth] === 1) {
+			graphics.drawCircle(halfWidth + x * cellWidth, halfWidth + y * cellWidth, halfWidth - margin);
+		}
+	}
+}
+graphics.endFill();
+
 
 var stage = new PIXI.Container();
 
-var worldTex = PIXI.Texture.fromImage('images/map.png');
-var world = new PIXI.Sprite(worldTex);
+stage.addChild(graphics);
 
 var pulses = new Array();
 
 var lastFrame = Date.now();
-
-stage.addChild(world);
 
 initialize();
 onWindowResize();
@@ -36,8 +55,8 @@ function animate() {
 }
 
 function onWindowResize() {
-	world.width = el.width();
-	world.height = el.width()/2;
+	graphics.width = el.width();
+	graphics.height = el.width() * (worldHeight / worldWidth);
 	renderer.resize(el.width(), el.height());
 	renderer.render(stage);
 }
