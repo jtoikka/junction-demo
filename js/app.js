@@ -1,14 +1,22 @@
 var el = $('#webgl-view');
 
-var renderer = new PIXI.autoDetectRenderer(el.width(), el.height(), {antialias: true});
+var pixelRatio = window.devicePixelRatio || 1;
+var rendererOptions = {
+    antialias:true,
+    transparent:false,
+    resolution:pixelRatio
+}
+
+var renderer = new PIXI.autoDetectRenderer(el.width(), el.height(), rendererOptions);
 
 var graphics = new PIXI.Graphics();
 
+//graphics.lineStyle(1,0xffffff, 0.7);
 graphics.lineStyle(0);
 graphics.beginFill(0xffffff, 0.7);
 
 var worldWidth = 128;
-var worldHeight = 64;
+var worldHeight = 49;
 
 var cellWidth = 32;
 var halfWidth = cellWidth / 2;
@@ -51,7 +59,7 @@ function animate() {
 	// 	pulse.time += delta;
 	// });
 	renderer.render(stage);
-	requestAnimationFrame(animate);
+	//requestAnimationFrame(animate);
 }
 
 function onWindowResize() {
